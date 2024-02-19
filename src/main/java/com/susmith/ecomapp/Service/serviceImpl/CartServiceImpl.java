@@ -9,6 +9,7 @@ import com.susmith.ecomapp.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -26,17 +27,20 @@ public class CartServiceImpl implements CartService {
 
     public UserCart addToCart(User user, Long productId) {
         UserCart userCart = userCartRepository.findByUser(user);
+
         if (userCart == null) {
-            userCart = new UserCart();
-            userCart.setUser(user);
+            userCart = new UserCart(user, new ArrayList<>());
         }
 
         Optional<Product> productOptional = productService.getProductById(productId);
 
-        if(productOptional.isPresent()){
+        if (productOptional.isPresent()) {
             Product product = productOptional.get();
             userCart.getProducts().add(product);
+            userCart.getSelectedProductIds().add(productId);
         }
+
+        userCart.setTotalCartAmount(userCart.getTotalCartAmount());
 
         userCartRepository.save(userCart);
         return userCart;
@@ -47,6 +51,8 @@ public class CartServiceImpl implements CartService {
         if (userCart != null) {
             userCart.getProducts().removeIf(product -> product.getId().equals(productId));
             userCart.getSelectedProductIds().remove(productId);
+
+            userCart.setTotalCartAmount(userCart.getTotalCartAmount());
 
             userCartRepository.save(userCart);
         }

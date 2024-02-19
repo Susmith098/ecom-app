@@ -53,14 +53,17 @@ public class UserService {
 
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("authentication: " + authentication);
         if (authentication == null || !authentication.isAuthenticated()) {
             return null; // No authenticated user
         }
 
         Object principal = authentication.getPrincipal();
+        System.out.println("principal: "+ principal);
         if (principal instanceof UserDetails) {
             String username = ((UserDetails) principal).getUsername();
-            return userRepository.findByname(username).orElse(null);
+            String email = username;
+            return userRepository.findByEmail(email).orElse(null);
         }
 
         return null;

@@ -55,7 +55,8 @@ public class AuthenticationController {
             new UserDto();
             UserDto userDto = UserDto.builder()
                     .userId(user.get().getId())
-                    .name(user.get().getUsername())
+                    .name(user.get().getName())
+                    .email(user.get().getEmail())
                     .role(String.valueOf(user.get().getRole()))
                     .build();
 

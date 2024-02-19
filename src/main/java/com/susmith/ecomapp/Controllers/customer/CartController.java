@@ -6,6 +6,8 @@ import com.susmith.ecomapp.Service.CartService;
 import com.susmith.ecomapp.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +22,15 @@ public class CartController {
 
     @GetMapping("/get")
     public ResponseEntity<UserCart> getUserCart() {
+        // Get the currently authenticated user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        System.out.println("Current Logged-in User: " + currentPrincipalName);
+
         User user = userService.getCurrentUser();
+        System.out.println("Current Logged-in User ID: " + user.getId());
+
+//        User user = userService.getCurrentUser();
         UserCart userCart = cartService.getUserCart(user);
         return ResponseEntity.ok(userCart);
     }
