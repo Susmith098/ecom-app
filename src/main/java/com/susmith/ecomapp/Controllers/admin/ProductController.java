@@ -56,7 +56,6 @@ public class ProductController {
             @RequestParam("image") MultipartFile image) {
 
         try {
-            // Validate inputs
             if (image == null || image.isEmpty()) {
                 return new ResponseEntity<>("Image file is required", HttpStatus.BAD_REQUEST);
             }
@@ -69,7 +68,6 @@ public class ProductController {
             product.setWeight(weight);
             product.setDescription(description);
 
-            // Retrieve Category
             Category category = categoryService.getCategoryById(categoryId)
                     .orElseThrow(() -> new IllegalArgumentException("Category not found"));
             product.setCategory(category);
@@ -81,7 +79,6 @@ public class ProductController {
 
             product.setImages(Collections.singletonList(productImage));
 
-            // Create Product
             Product createdProduct = productService.createProduct(product);
 
             // Save Product Image
@@ -90,7 +87,7 @@ public class ProductController {
             return new ResponseEntity<>("Product and Image successfully created with ID: " + createdProduct.getId(), HttpStatus.CREATED);
 
         } catch (Exception e) {
-            e.printStackTrace(); // Log the exception
+            e.printStackTrace();
             return new ResponseEntity<>("Failed to create product and image", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

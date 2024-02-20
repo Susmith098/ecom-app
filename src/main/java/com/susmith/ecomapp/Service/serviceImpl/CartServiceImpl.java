@@ -1,8 +1,10 @@
 package com.susmith.ecomapp.Service.serviceImpl;
 
+import com.susmith.ecomapp.Entity.Order;
 import com.susmith.ecomapp.Entity.Product;
 import com.susmith.ecomapp.Entity.User;
 import com.susmith.ecomapp.Entity.UserCart;
+import com.susmith.ecomapp.Repository.OrderRepository;
 import com.susmith.ecomapp.Repository.UserCartRepository;
 import com.susmith.ecomapp.Service.CartService;
 import com.susmith.ecomapp.Service.ProductService;
@@ -20,6 +22,9 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     public UserCart getUserCart(User user) {
         return userCartRepository.findByUser(user);
@@ -62,5 +67,18 @@ public class CartServiceImpl implements CartService {
     public double calculateTotalCartAmount(User user) {
         UserCart userCart = getUserCart(user);
         return userCart != null ? userCart.getTotalCartAmount() : 0.0;
+    }
+
+
+
+    @Override
+    public void clearCart(User user) {
+        UserCart userCart = getUserCart(user);
+        if (userCart != null) {
+            userCart.getProducts().clear();
+            userCart.getSelectedProductIds().clear();
+            userCart.setTotalCartAmount(0.0);
+            userCartRepository.save(userCart);
+        }
     }
 }

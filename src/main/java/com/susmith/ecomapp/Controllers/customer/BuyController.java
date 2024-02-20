@@ -20,13 +20,6 @@ public class BuyController {
     @Autowired
     private UserService userService;
 
-//    @GetMapping("/get")
-//    public ResponseEntity<UserBuy> getUserBuy() {
-//        User user = userService.getCurrentUser();
-//        UserBuy userBuy = userBuyService.getUserBuy(user);
-//        return ResponseEntity.ok(userBuy);
-//    }
-
     @PostMapping("/{productId}")
     public ResponseEntity<UserBuy> buyNow(@PathVariable Long productId) {
         User user = userService.getCurrentUser();

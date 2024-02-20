@@ -12,4 +12,5 @@ public interface CartService {
     UserCart removeFromCart(User user, Long productId);
 
     double calculateTotalCartAmount(User user);
+    void clearCart(User user);
 }

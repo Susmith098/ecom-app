@@ -22,7 +22,7 @@ public class CartController {
 
     @GetMapping("/get")
     public ResponseEntity<UserCart> getUserCart() {
-        // Get the currently authenticated user
+        // Current authenticated user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         System.out.println("Current Logged-in User: " + currentPrincipalName);
@@ -30,7 +30,6 @@ public class CartController {
         User user = userService.getCurrentUser();
         System.out.println("Current Logged-in User ID: " + user.getId());
 
-//        User user = userService.getCurrentUser();
         UserCart userCart = cartService.getUserCart(user);
         return ResponseEntity.ok(userCart);
     }
@@ -47,12 +46,5 @@ public class CartController {
         User user = userService.getCurrentUser();
         UserCart userCart = cartService.removeFromCart(user, productId);
         return ResponseEntity.ok(userCart);
-    }
-
-    @GetMapping("/totalAmount")
-    public ResponseEntity<Double> calculateTotalCartAmount() {
-        User user = userService.getCurrentUser();
-        double totalAmount = cartService.calculateTotalCartAmount(user);
-        return ResponseEntity.ok(totalAmount);
     }
 }

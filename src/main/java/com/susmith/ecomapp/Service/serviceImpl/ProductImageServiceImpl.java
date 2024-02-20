@@ -28,6 +28,7 @@ public class ProductImageServiceImpl implements ProductImageService {
     private ProductImageRepository productImageRepository;
 
     public void saveImage(MultipartFile image, Long productId) throws IOException {
+
         // Create upload directory if not exists
         File uploadDir = new File(UPLOAD_DIR);
         if (!uploadDir.exists()) {

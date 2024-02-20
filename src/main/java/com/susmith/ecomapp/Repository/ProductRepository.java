@@ -18,6 +18,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE %:keyword%")
     public List<Product> search(@Param("keyword") String keyword);
 
-//    @Query("SELECT p FROM Product p WHERE p.stockQuantity < 10")
-//    List<Product> findLowStockProducts();
 }

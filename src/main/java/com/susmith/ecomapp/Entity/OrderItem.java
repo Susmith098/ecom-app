@@ -20,8 +20,6 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Transient
-    private String categoryName;
-
+    @Column(name = "quantity")
     private int quantity;
 }

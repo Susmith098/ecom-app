@@ -6,6 +6,7 @@ import com.susmith.ecomapp.Repository.CategoryRepository;
 import com.susmith.ecomapp.Service.CategoryService;
 import com.susmith.ecomapp.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

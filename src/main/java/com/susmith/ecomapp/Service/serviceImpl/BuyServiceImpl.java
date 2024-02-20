@@ -21,10 +21,6 @@ public class BuyServiceImpl implements BuyService {
     @Autowired
     private ProductService productService;
 
-    public UserBuy getUserBuy(User user) {
-        return userBuyRepository.findByUser(user);
-    }
-
     public UserBuy buyNow(User user, Long productId) {
         UserBuy userBuy = userBuyRepository.findByUser(user);
         if (userBuy == null) {

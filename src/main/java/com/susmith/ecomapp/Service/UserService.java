@@ -15,29 +15,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
     @Autowired
-    UserRepository userRepo;
-
-    @Autowired
     private UserRepository userRepository;
 
     public List<User> getAllUsers(){
+
         return userRepository.findAll();
+
     }
 
 
     public User getUserById(Integer id) {
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.orElse(null);
-    }
-
-
-    public User createUser(User user) {
-        return userRepository.save(user);
     }
 
 
@@ -55,7 +50,7 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("authentication: " + authentication);
         if (authentication == null || !authentication.isAuthenticated()) {
-            return null; // No authenticated user
+            return null;
         }
 
         Object principal = authentication.getPrincipal();
